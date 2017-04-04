@@ -41,8 +41,8 @@ export const cashLabel = {
   color: '#537b35',
 }
 export const flex = {
-  textAlign: 'left',
-  // border: '1px solid red'
+  textAlign: 'center',
+  // border: '1px solid red',
 }
 export const flexFooter = {
   textAlign: 'center',
@@ -50,17 +50,24 @@ export const flexFooter = {
 }
 export const flexKeys = {
   bottom: 0,
+  justifyContent: 'space-around',
 }
 export const expLabel = {
   fontSize: 16,
-  fontFamily: 'Amatic SC, cursive'
+  fontFamily: 'Amatic SC, cursive',
+  textAlign: 'center'
 }
-export const flexLevel= {
-  textAlign: 'left',
-  fontFamily: 'Nova Square, cursive',
-  fontSize: 18,
+export const levelLabel= {
+  fontSize: 20,
+  fontFamily: 'Josefin Slab, serif',
   color: '#00a0f0'
 }
 export const imgHeader = {
-  marginBottom: 5
+  marginBottom: 8,
+  position: 'absolute',
+
+}
+export const linesLabel = {
+  fontFamily: 'Exo, sans-serif',
+  fontWeight: 500
 }
