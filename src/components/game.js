@@ -30,6 +30,7 @@ class Game extends Component {
       upgrade_extended: 50,
       upgrade_deg: 0,
       multiplier: 1,
+      lineSpacing: 0
     }
     this.handleRightClick = this.handleRightClick.bind(this)
     this.handleLeftClick = this.handleLeftClick.bind(this)
@@ -38,11 +39,14 @@ class Game extends Component {
   }
   handleRightClick(){ /* RIGHT KEYBOARD CLICK */
     this.setState({lines: this.state.lines + this.state.multiplier + this.state.experience})
-
-    this.setState({end_size: 45})
-    setInterval(a=>{
+    this.setState({lineSpacing: 4})
+    setTimeout(a=>{
+      this.setState({lineSpacing: 0})
+    },300)
+    this.setState({end_size: 25})
+    setTimeout(a=>{
       this.setState({end_size: 18})
-    },100)
+    },0)
     this.setState({btn_end_width: 125})
     setInterval(b=> {
       this.setState({btn_end_width: 100})
@@ -50,7 +54,6 @@ class Game extends Component {
     this.setState({experience: this.state.experience + (this.state.experience / 500)
     })
     this.setState({cash: this.state.cash + (this.state.lines * this.state.experience)})
-    this.linesReduce(this.state.lines)
   }
 
   handleLeftClick(){ /* LEFT KEYBOARD CLICK */
@@ -79,10 +82,13 @@ class Game extends Component {
   lines(){ /*** LINES OF CODE LABEL ***/
     return (
       <Motion
-        defaultStyle={{s: this.state.size}}
-        style={{s: spring(this.state.end_size)}}>
+        defaultStyle={{s: this.state.size, ls: 0}}
+        style={{
+          s: spring(this.state.end_size, presets.gentle),
+          ls: spring(this.state.lineSpacing)
+        }}>
 
-        {i => <span style={{fontSize: i.s, ...linesLabel}}>{this.numberReducer(this.state.lines)}</span>}
+        {i => <span style={{fontSize: i.s, letterSpacing: `${i.ls}px`, ...linesLabel}}>{this.numberReducer(this.state.lines)}</span>}
 
       </Motion>
     )
@@ -91,6 +97,12 @@ class Game extends Component {
     const digits = Math.round(number).toString().length
     const numberStr = Math.round(number).toString()
     switch(digits){
+      case 4: {
+          return numberStr.slice(0,1) + ',' + numberStr.slice(1,4)
+      }
+      case 5: {
+          return numberStr.slice(0,2) + ',' + numberStr.slice(2,4)
+      }
       case 6: {
           return numberStr.slice(0,3) + 'K'
       }
