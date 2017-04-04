@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Motion, spring, presets } from 'react-motion'
 import Flexbox from 'flexbox-react'
 import Key from './key_1'
-import { btn_1, btn_switch } from './style'
-const width = window.innerWidth
+import { btn_1, btn_switch, btn_switch_2 } from './style'
 
 const flex = {
   justifyContent: 'space-around',
@@ -58,7 +57,7 @@ class Two extends Component {
           <Flexbox style={{...flex}} flexGrow={1}>{this.score()}</Flexbox>
           <Flexbox style={{...flex}} flexGrow={1}>{this.score()}</Flexbox>
         </Flexbox>
-
+        <div style={{bottom: 0, border: '1px solid red'}}>
         <Flexbox flexDirection='row' style={{textAlign: 'center'}}>
           <Flexbox style={{...flex}} flexGrow={1}>
             <Motion
@@ -81,7 +80,7 @@ class Two extends Component {
 
           <Flexbox style={{...flex}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:1000, w: 100}}
+              defaultStyle={{y:900, w: 100}}
               style={{y: spring(500, presets.gentle), w: spring(100, presets.wobbly)}}>
               { i =>
                 <Key
@@ -90,7 +89,7 @@ class Two extends Component {
                     height: this.state.btn_height,
                     width: i.w,
                     top: i.y,
-                    ...btn_1
+                    ...btn_switch_2
                   }}
                   click={this.handleClick}
                   />
@@ -100,16 +99,15 @@ class Two extends Component {
 
           <Flexbox style={{...flex}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:1000, w: 100}}
+              defaultStyle={{y:800, w: 100}}
               style={{y: spring(500, presets.gentle), w: spring(this.state.btn_end_width, presets.wobbly)}}>
               { i =>
                 <Key
                   style={{
-                    transform: 'rotate(180deg)',
                     height: this.state.btn_height,
                     width: i.w,
                     top: i.y,
-                    ...btn_switch
+                    ...btn_switch_2
                   }}
                   click={this.handleClick}
                   />
@@ -118,6 +116,7 @@ class Two extends Component {
           </Flexbox>
 
         </Flexbox>
+        </div>
       </div>
     )
   }

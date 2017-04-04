@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import B from './components/demo-b'
+import Game from './components/game'
 
 import './App.css';
 
@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <div className="App">
         <div style={styles.div}>
-          <B name='Bravo'/>
+          <Game name='game-component'/>
         </div>
       </div>
     );
