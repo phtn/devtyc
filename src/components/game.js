@@ -4,12 +4,13 @@ import Flexbox from 'flexbox-react'
 import Upgrade from './upgrade'
 import RightKeyboard from './keyboard_1'
 import LeftKeyboard from './keyboard_2'
-import { btn_1, btn_switch, btn_switch_2, btn_upgrade } from './style'
+import Medal from '../svg/medal.svg'
+import Exp from '../svg/brain.svg'
+import Fund from '../svg/fund.svg'
+import Code from '../svg/code.svg'
+import { btn_switch_2, btn_upgrade, cashLabel, flex, flexFooter, flexKeys, expLabel, flexLevel, imgHeader } from './style'
 
-const flex = {
-  justifyContent: 'space-around',
-  //border: '1px solid red'
-}
+
 
 class Game extends Component {
   constructor(props){
@@ -26,18 +27,22 @@ class Game extends Component {
       btn_left_end_width: 100,
       btn_height: 100,
       btn_end_height: 100,
+      upgrade_extended: 50,
+      upgrade_deg: 0,
+      multiplier: 1,
     }
-    this.handleClick = this.handleClick.bind(this)
+    this.handleRightClick = this.handleRightClick.bind(this)
     this.handleLeftClick = this.handleLeftClick.bind(this)
+    this.upgradeClick = this.upgradeClick.bind(this)
     this.lines = this.lines.bind(this)
   }
-  handleClick(){
-    this.setState({lines: this.state.lines + 1 + this.state.experience})
-    console.log(this.state.size)
-    this.setState({end_size: 85})
+  handleRightClick(){ /* RIGHT KEYBOARD CLICK */
+    this.setState({lines: this.state.lines + this.state.multiplier + this.state.experience})
+
+    this.setState({end_size: 45})
     setInterval(a=>{
-      this.setState({end_size: 35})
-    },600)
+      this.setState({end_size: 25})
+    },100)
     this.setState({btn_end_width: 125})
     setInterval(b=> {
       this.setState({btn_end_width: 100})
@@ -47,21 +52,30 @@ class Game extends Component {
     this.setState({cash: this.state.cash + (this.state.lines * this.state.experience)})
 
   }
-  handleLeftClick(){
-    this.setState({lines: this.state.lines + 1 + this.state.experience})
-    console.log(this.state.size)
-    this.setState({end_size: 85})
-    setInterval(a=>{
-      this.setState({end_size: 35})
-    },600)
-    this.setState({btn_left_end_width: 125})
-    setInterval(b=> {
-      this.setState({btn_left_end_width: 100})
-    },75)
-    this.setState({experience: this.state.experience + (this.state.experience / 500)
+  handleLeftClick(){ /* LEFT KEYBOARD CLICK */
+
+    this.setState({ /* LINES of CODE STATE */
+      lines: this.state.lines + this.state.multiplier + this.state.experience })
+
+    this.setState({ /* LINES LABEL SIZE */
+      end_size: 45})
+      setInterval(a=>{
+        this.setState({end_size: 25})
+      },100)
+
+    this.setState({ /* LEFT BUTTON MOTION STATE*/
+      btn_left_end_width: 125})
+      setInterval(b=> {
+        this.setState({btn_left_end_width: 100})
+      },75)
+
+    this.setState({ /* EXPERIENCE INCREMENT STATE */
+      experience: this.state.experience + (this.state.experience / 500)
     })
-    this.setState({cash: this.state.cash + (this.state.lines * this.state.experience)})
+    this.setState({ /* CASH INCREMENT STATE */
+      cash: this.state.cash + (this.state.lines * this.state.experience)})
   }
+
   lines(){ /*** SCORE ***/
 
     return (
@@ -69,7 +83,7 @@ class Game extends Component {
         defaultStyle={{s: this.state.size}}
         style={{s: spring(this.state.end_size)}}>
 
-        {i => <span style={{fontSize: i.s}}>{Number(this.state.lines).toFixed(0)}</span>}
+        {i => <span style={{fontSize: i.s, fontFamily: 'Nova Square, cursive'}}>{Number(this.state.lines).toFixed(0)}</span>}
 
       </Motion>
     )
@@ -81,7 +95,7 @@ class Game extends Component {
         defaultStyle={{s: 30}}
         style={{s: spring(30)}}>
 
-        {i => <span style={{fontSize: i.s}}>$ {Number(this.state.cash).toFixed(0)}</span>}
+        {i => <span style={{fontSize: i.s, ...cashLabel}}>$ {Number(this.state.cash).toFixed(0)}</span>}
 
       </Motion>
     )
@@ -92,26 +106,52 @@ class Game extends Component {
         defaultStyle={{s: 15}}
         style={{s: spring(15)}}>
 
-        {i => <span style={{fontSize: i.s}}>{Number(this.state.experience).toFixed(8)}</span>}
+        {i => <span style={{fontSize: i.s, ...expLabel}}>{Number(this.state.experience).toFixed(3) }</span>}
 
       </Motion>
     )
   }
+  upgradeClick(){
+    if(false) {
+      this.setState({ multiplier: this.state.multiplier * 2 })
+      this.setState({ level: this.state.level + 1})
+    }
+
+
+    this.setState({ upgrade_extended: 60})
+    setInterval(a=> {
+      this.setState({upgrade_extended: 50})
+    }, 100)
+  }
   render(){
     return(
       <div>
-        <Flexbox flexDirection='row' style={{textAlign:'center'}}>
-          <Flexbox style={{...flex}} flexGrow={1}>{this.experience()}</Flexbox>
-          <Flexbox style={{...flex}} flexGrow={1}>{this.cash()}</Flexbox>
-          <Flexbox style={{...flex}} flexGrow={1}>{this.lines()}</Flexbox>
+
+        <Flexbox flexDirection='row' justifyContent='flex-start'>
+          <Flexbox style={{...flexLevel}} flexGrow={1} flexDirection='column'>
+            <img alt={Medal} style={{...imgHeader}} src={Medal} height='20px' width='20px'/>
+            &nbsp;{this.state.multiplier}
+          </Flexbox>
+          <Flexbox style={{...flex}} flexGrow={1} flexDirection='column'>
+            <img alt={Medal} style={{...imgHeader}} src={Exp} height='20px' width='20px'/>
+            {this.experience()}
+          </Flexbox>
+          <Flexbox style={{...flex}} flexGrow={1} flexDirection='column'>
+            <img alt={Medal} style={{...imgHeader}} src={Fund} height='20px' width='20px'/>
+            {this.cash()}
+          </Flexbox>
+          <Flexbox style={{...flex}} flexGrow={1} flexDirection='column'>
+            <img alt={Medal} style={{...imgHeader}} src={Code} height='20px' width='20px'/>
+            {this.lines()}
+          </Flexbox>
         </Flexbox>
 
-        <div style={{bottom: 0}}>
-        <Flexbox flexDirection='row' style={{textAlign: 'center'}}>
+        <div style={{...flexKeys}}>
+        <Flexbox flexDirection='row' >
 
-          <Flexbox style={{...flex}} flexGrow={1}>
+          <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:800, w: 100}}
+              defaultStyle={{y:1200, w: 100}}
               style={{
                 y: spring(500, presets.gentle),
                 w: spring(this.state.btn_left_end_width, presets.wobbly)}}>
@@ -129,29 +169,35 @@ class Game extends Component {
             </Motion>
           </Flexbox>
 
-          <Flexbox style={{...flex}} flexGrow={1}>
+          <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:900, w: 100}}
-              style={{y: spring(525, presets.gentle), w: spring(50, presets.wobbly)}}>
-            { i => /* UPGRADE */
+              defaultStyle={{y:1000, w: 50, d: -720}}
+              style={{
+                y: spring(525, presets.gentle),
+                w: spring(this.state.upgrade_extended, presets.wobbly),
+                d: spring(this.state.upgrade_deg, presets.stiff)}}>
+            { i => /* UPGRADE BUTTON */
                 <Upgrade
                   style={{
-                    transform: 'rotate(180deg)',
+                    transform: `rotate(${i.d}deg)`,
                     height: 50,
                     width: i.w,
                     top: i.y,
+                    color: '#00a0f0',
                   ...btn_upgrade
                   }}
-                  click={this.handleClick}
+                  click={this.upgradeClick}
                   />
               }
             </Motion>
           </Flexbox>
 
-          <Flexbox style={{...flex}} flexGrow={1}>
+          <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
               defaultStyle={{y:800, w: 100}}
-              style={{y: spring(500, presets.gentle), w: spring(this.state.btn_end_width, presets.wobbly)}}>
+              style={{
+                y: spring(500, presets.gentle),
+                w: spring(this.state.btn_end_width, presets.wobbly)}}>
               { i => /* RIGHT KEYBOARD */
                 <RightKeyboard
                   style={{
@@ -160,7 +206,7 @@ class Game extends Component {
                     top: i.y,
                     ...btn_switch_2
                   }}
-                  click={this.handleClick}
+                  click={this.handleRightClick}
                   />
               }
             </Motion>
@@ -168,6 +214,7 @@ class Game extends Component {
 
         </Flexbox>
         </div>
+
       </div>
     )
   }
