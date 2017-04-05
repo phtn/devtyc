@@ -14,6 +14,54 @@ import { btn_switch_2, btn_upgrade, cashLabel, flex, flexFooter, flexKeys, expLa
 const width = window.innerWidth
 const height = window.innerHeight
 
+const rightTap = new mojs.Burst({
+  radius: {60:80},
+  count: 4,
+  angle: 45,
+  children: {
+    shape: 'curve',
+    fill: 'none',
+    radiusY: {0:[-3]},
+    points: 3,
+    stroke: 'gray',
+    strokeWidth: 1,
+    opacity: {.5: 0},
+    angle: 90,
+  },
+  left: width/1.22,
+  top: height/1.185,
+  duration: 100,
+})
+
+const leftTap = new mojs.Burst({
+  radius: {60:80},
+  count: 4,
+  angle: 45,
+  children: {
+    shape: 'curve',
+    fill: 'none',
+    radiusY: {0:[-3]},
+    points: 3,
+    stroke: 'gray',
+    strokeWidth: 1,
+    opacity: {.5: 0},
+    angle: 90,
+  },
+  left: width/5.25,
+  top: height/1.185,
+  duration: 100,
+})
+
+const upgradeBurst = new mojs.ShapeSwirl({
+  fill: '#00a0f0',
+  y: {0:-650},
+  duration: 3000,
+  degreeShift: -25,
+  top: height/1.185,
+  swirlFrequency: 3,
+})
+
+
 class Game extends Component {
   constructor(props){
     super(props)
@@ -63,24 +111,8 @@ class Game extends Component {
       this.setState({upgrade_extended: 70})
       //console.log(this.state.level)
     }
-    const burst = new mojs.Burst({
-      radius: {60:80},
-      count: 'rand(2,4)',
-      angle: 'rand(0,270)',
-      children: {
-        shape: 'curve',
-        fill: 'none',
-        radiusY: {10:0},
-        points: 3,
-        stroke: 'gray',
-        strokeWidth: 1,
-        opacity: {1: 0},
-        angle: 270,
-      },
-      left: width/1.22,
-      top: height/1.18,
-    })
-    new mojs.Timeline({}).add(burst).play()
+    const timeline = new mojs.Timeline({}).add(rightTap).play()
+
   }
 
   handleLeftClick(){ /* LEFT KEYBOARD CLICK */
@@ -111,6 +143,7 @@ class Game extends Component {
       this.setState({upgrade_extended: 70})
       //console.log(this.state.level)
     }
+    const timeline = new mojs.Timeline({}).add(leftTap).play()
   }
   lines(){ /*** LINES OF CODE LABEL ***/
     return (
@@ -189,7 +222,7 @@ class Game extends Component {
     )
   }
   upgradeLevel(level){
-    const cashValues = [25, 50, 100, 500,
+    const cashValues = [1,25, 50, 100, 500,
       1000, // 1K
       5000, // 5K
       20000, // 20K
@@ -219,6 +252,7 @@ class Game extends Component {
       this.setState({ level: this.state.level + 1})
       this.setState({cash: this.state.cash - this.upgradeLevel(this.state.level)})
       console.log(this.state.keyRadius)
+      const timeline = new mojs.Timeline({}).add(upgradeBurst).play()
     }
 
 
