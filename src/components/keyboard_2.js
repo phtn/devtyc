@@ -1,14 +1,13 @@
 import React from 'react'
-import ZeroOne from '../svg/01.svg'
 export default props => (
   <button
     style={props.style}
     onClick={props.click}
   >
     <img
-      src={ZeroOne}
+      src={props.img}
       width="100%"
       height="50px"
-      alt={ZeroOne}/>
+      alt={props.img}/>
   </button>
 )

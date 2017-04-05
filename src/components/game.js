@@ -14,6 +14,13 @@ import { btn_switch_2, btn_upgrade, cashLabel, flex, flexFooter, flexKeys, expLa
 const width = window.innerWidth
 const height = window.innerHeight
 
+import K1 from '../svg/k1.svg'
+import K2 from '../svg/k2.svg'
+import K3 from '../svg/k3.svg'
+import K4 from '../svg/k4.svg'
+const keyboards = [K1,K1,K1, K2,K2,K2, K3,K3,K3, K4,K4,K4,]
+const keyboardColors = ['green', '#2a5934', 'teal', '#003666', '#050f2c', '#4d4f53', '#333333', '#003366', '#e01f3d', '#543729', '#343a4e', '#231f20', '#204056', '#555', '#444', '#333', '#111', '#000'  ]
+
 const rightTap = new mojs.Burst({
   radius: {60:80},
   count: 4,
@@ -319,11 +326,13 @@ class Game extends Component {
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* LEFT KEYBOARD */
                 <LeftKeyboard
+                  img={keyboards[this.state.level - 1]}
                   style={{
                     height: this.state.btn_height,
                     width: i.w,
                     top: i.y,
                     borderRadius: i.r,
+                    backgroundColor: keyboardColors[this.state.level -1] || 'black',
                     ...btn_switch_2
                   }}
                   click={this.handleLeftClick}
@@ -364,11 +373,13 @@ class Game extends Component {
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* RIGHT KEYBOARD */
                 <RightKeyboard
+                  img={keyboards[this.state.level -1]}
                   style={{
                     height: this.state.btn_height,
                     width: i.w,
                     top: i.y,
                     borderRadius: i.r,
+                    backgroundColor: keyboardColors[this.state.level -1],
                     ...btn_switch_2
                   }}
                   click={this.handleRightClick}
