@@ -28,7 +28,7 @@ const rightTap = new mojs.Burst({
     opacity: {.5: 0},
     angle: 90,
   },
-  left: width/1.22,
+  left: width/1.23,
   top: height/1.185,
   duration: 100,
 })
@@ -47,9 +47,28 @@ const leftTap = new mojs.Burst({
     opacity: {.5: 0},
     angle: 90,
   },
-  left: width/5.25,
+  left: width/5.26,
   top: height/1.185,
   duration: 100,
+})
+
+const upgradeBurst_2 = new mojs.Burst({
+  radius: {20:60},
+  count: 3,
+  angle: {0:-40},
+  children: {
+    shape: 'circle',
+    fill: 'none',
+    stroke: '#00a0f0',
+    strokeWidth: 1,
+    opacity: {.5: 0},
+    angle: 90,
+    radius: 'rand(0,15)',
+    delay: 'stagger(rand(0,100))'
+  },
+  top: height/1.185,
+  duration: 100,
+  degree: 60
 })
 
 const upgradeBurst = new mojs.ShapeSwirl({
@@ -57,8 +76,9 @@ const upgradeBurst = new mojs.ShapeSwirl({
   y: {0:-650},
   duration: 3000,
   degreeShift: -25,
-  top: height/1.185,
+  top: height/1.2,
   swirlFrequency: 3,
+  radius: 10,
 })
 
 
@@ -252,7 +272,7 @@ class Game extends Component {
       this.setState({ level: this.state.level + 1})
       this.setState({cash: this.state.cash - this.upgradeLevel(this.state.level)})
       console.log(this.state.keyRadius)
-      const timeline = new mojs.Timeline({}).add(upgradeBurst).play()
+      const timeline = new mojs.Timeline({}).add(upgradeBurst,upgradeBurst_2).play()
     }
 
 
@@ -292,10 +312,10 @@ class Game extends Component {
 
           <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:1200, w: 100, r: this.state.keyRadius}}
+              defaultStyle={{y:1200, w: this.state.btn_end_width, r: this.state.keyRadius}}
               style={{
                 y: spring(500, presets.gentle),
-                w: spring(this.state.btn_left_end_width, presets.wobbly),
+                w: spring(this.state.btn_left_end_width, presets.gentle),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* LEFT KEYBOARD */
                 <LeftKeyboard
@@ -337,10 +357,10 @@ class Game extends Component {
 
           <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:800, w: 100, r: this.state.keyRadius}}
+              defaultStyle={{y:800, w: this.state.btn_end_width, r: this.state.keyRadius}}
               style={{
                 y: spring(500, presets.gentle),
-                w: spring(this.state.btn_end_width, presets.wobbly),
+                w: spring(this.state.btn_end_width, presets.gentle),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* RIGHT KEYBOARD */
                 <RightKeyboard
