@@ -18,7 +18,7 @@ import K1 from '../svg/k1.svg'
 import K2 from '../svg/k2.svg'
 import K3 from '../svg/k3.svg'
 import K4 from '../svg/k4.svg'
-const keyboards = [K1,K1,K1, K2,K2,K2, K3,K3,K3, K4,K4,K4,]
+const keyboards = [K1,K1,K1, K2,K2,K2,K2,K2,K2, K3,K3,K3,K3,K3,K3,K3,K3,K3, K4,K4,K4,K4,K4,K4,K4,K4,K4,K4,K4,K4,]
 const keyboardColors = ['green', '#2a5934', 'teal', '#003666', '#050f2c', '#4d4f53', '#333333', '#003366', '#e01f3d', '#543729', '#343a4e', '#231f20', '#204056', '#555', '#444', '#333', '#111', '#000'  ]
 
 const rightTap = new mojs.Burst({
@@ -298,7 +298,7 @@ class Game extends Component {
         <Flexbox flexDirection='row' justifyContent='flex-start'>
           <Flexbox style={{...flex}} flexGrow={1} flexDirection='column'>
             <img alt={Medal} style={{...imgHeader}} src={Medal} height='20px' width='20px'/>
-            <span style={{...levelLabel}}>&nbsp;{this.state.level}</span>
+            <span style={{...levelLabel}}>&nbsp;&nbsp;{this.state.level}</span>
           </Flexbox>
           <Flexbox style={{...flex}} flexGrow={2} flexDirection='column'>
             <img alt={Medal} style={{...imgHeader}} src={Exp} height='20px' width='20px'/>
