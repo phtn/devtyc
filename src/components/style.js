@@ -3,22 +3,27 @@ export const btn_left = {
     border: 'none',
     borderRadius: '50px',
     backgroundColor: '#777',
+
   }
 export const btn_switch = {
   border: 'none',
   borderRadius: '30px',
   backgroundColor: '#fc636b',
 }
-export const btn_switch_2 = {
+export const leftKey = {
   border: 'none',
-  
   position: 'absolute',
+}
+export const rightKey = {
+  border: 'none',
+  position: 'absolute',
+  //left: window.innerWidth/1.43
 }
 export const btn_upgrade = {
   border: 'none',
   borderRadius: '5px',
   backgroundColor: 'none',
-  position: 'absolute'
+  position: 'absolute',
 }
 export const btn_upgrade_active = {
   border: '3px dotted #34bf49',
@@ -46,6 +51,7 @@ export const flex = {
 export const flexFooter = {
   textAlign: 'center',
   justifyContent: 'space-around',
+  // border: '1px solid green'
 }
 export const flexKeys = {
   bottom: 0,

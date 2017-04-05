@@ -9,7 +9,8 @@ import Exp from '../svg/brain.svg'
 import Fund from '../svg/fund.svg'
 import Code from '../svg/code.svg'
 import mojs from 'mo-js'
-import { btn_switch_2, btn_upgrade, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel } from './style'
+import Pointable from '../pointable.js'
+import { leftKey, btn_upgrade, rightKey, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel } from './style'
 
 const width = window.innerWidth
 const height = window.innerHeight
@@ -325,6 +326,7 @@ class Game extends Component {
                 w: spring(this.state.btn_left_end_width, presets.gentle),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* LEFT KEYBOARD */
+
                 <LeftKeyboard
                   img={keyboards[this.state.level - 1]}
                   style={{
@@ -333,10 +335,11 @@ class Game extends Component {
                     top: i.y,
                     borderRadius: i.r,
                     backgroundColor: keyboardColors[this.state.level -1] || 'black',
-                    ...btn_switch_2
+                    ...leftKey
                   }}
                   click={this.handleLeftClick}
                   />
+
               }
             </Motion>
           </Flexbox>
@@ -349,6 +352,7 @@ class Game extends Component {
                 w: spring(this.state.upgrade_extended, presets.wobbly),
                 d: spring(this.state.upgrade_deg, presets.stiff)}}>
             { i => /* UPGRADE BUTTON */
+
                 <Upgrade
                   style={{
                     transform: `rotate(${i.d}deg)`,
@@ -372,6 +376,7 @@ class Game extends Component {
                 w: spring(this.state.btn_end_width, presets.gentle),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* RIGHT KEYBOARD */
+
                 <RightKeyboard
                   img={keyboards[this.state.level -1]}
                   style={{
@@ -380,7 +385,7 @@ class Game extends Component {
                     top: i.y,
                     borderRadius: i.r,
                     backgroundColor: keyboardColors[this.state.level -1],
-                    ...btn_switch_2
+                    ...rightKey
                   }}
                   click={this.handleRightClick}
                   />
