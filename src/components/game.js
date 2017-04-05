@@ -65,13 +65,13 @@ class Game extends Component {
     }
     const burst = new mojs.Burst({
       radius: {60:80},
-      count: 4,
-      angle: 'rand(0,180)',
+      count: 'rand(2,4)',
+      angle: 'rand(0,270)',
       children: {
         shape: 'curve',
         fill: 'none',
-        radiusY: 5,
-        points: 1,
+        radiusY: {10:0},
+        points: 3,
         stroke: 'gray',
         strokeWidth: 1,
         opacity: {1: 0},
