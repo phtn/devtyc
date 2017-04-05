@@ -11,8 +11,8 @@ export const btn_switch = {
 }
 export const btn_switch_2 = {
   border: 'none',
-  borderRadius: '50px',
-  backgroundColor: '#34bf49',
+  
+  backgroundColor: 'green',
   position: 'absolute',
 }
 export const btn_upgrade = {

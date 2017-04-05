@@ -8,9 +8,11 @@ import Medal from '../svg/medal.svg'
 import Exp from '../svg/brain.svg'
 import Fund from '../svg/fund.svg'
 import Code from '../svg/code.svg'
+import mojs from 'mo-js'
 import { btn_switch_2, btn_upgrade, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel } from './style'
 
-
+const width = window.innerWidth
+const height = window.innerHeight
 
 class Game extends Component {
   constructor(props){
@@ -30,7 +32,9 @@ class Game extends Component {
       upgrade_extended: 50,
       upgrade_deg: 0,
       multiplier: 1,
-      lineSpacing: 0
+      lineSpacing: 0,
+      upgradeBox: 'gray',
+      keyRadius: 50,
     }
     this.handleRightClick = this.handleRightClick.bind(this)
     this.handleLeftClick = this.handleLeftClick.bind(this)
@@ -54,6 +58,29 @@ class Game extends Component {
     this.setState({experience: this.state.experience + (this.state.experience / 500)
     })
     this.setState({cash: this.state.cash + (this.state.lines * this.state.experience)})
+    if(this.state.cash >= this.upgradeLevel(this.state.level)){
+      this.setState({upgradeBox: '#00a0f0'})
+      this.setState({upgrade_extended: 70})
+      //console.log(this.state.level)
+    }
+    const burst = new mojs.Burst({
+      radius: {60:80},
+      count: 4,
+      angle: 'rand(0,180)',
+      children: {
+        shape: 'curve',
+        fill: 'none',
+        radiusY: 5,
+        points: 1,
+        stroke: 'gray',
+        strokeWidth: 1,
+        opacity: {1: 0},
+        angle: 270,
+      },
+      left: width/1.22,
+      top: height/1.18,
+    })
+    new mojs.Timeline({}).add(burst).play()
   }
 
   handleLeftClick(){ /* LEFT KEYBOARD CLICK */
@@ -62,9 +89,9 @@ class Game extends Component {
       lines: this.state.lines + this.state.multiplier + this.state.experience })
 
     this.setState({ /* LINES LABEL SIZE */
-      end_size: 45})
+      end_size: 25})
       setInterval(a=>{
-        this.setState({end_size: 25})
+        this.setState({end_size: 18})
       },100)
 
     this.setState({ /* LEFT BUTTON MOTION STATE*/
@@ -78,6 +105,12 @@ class Game extends Component {
     })
     this.setState({ /* CASH INCREMENT STATE */
       cash: this.state.cash + (this.state.lines * this.state.experience)})
+
+    if(this.state.cash >= this.upgradeLevel(this.state.level)){
+      this.setState({upgradeBox: '#00a0f0'})
+      this.setState({upgrade_extended: 70})
+      //console.log(this.state.level)
+    }
   }
   lines(){ /*** LINES OF CODE LABEL ***/
     return (
@@ -101,7 +134,7 @@ class Game extends Component {
           return numberStr.slice(0,1) + ',' + numberStr.slice(1,4)
       }
       case 5: {
-          return numberStr.slice(0,2) + ',' + numberStr.slice(2,4)
+          return numberStr.slice(0,2) + ',' + numberStr.slice(2,5)
       }
       case 6: {
           return numberStr.slice(0,3) + 'K'
@@ -156,14 +189,36 @@ class Game extends Component {
     )
   }
   upgradeLevel(level){
-    const cashValues = [100, 500, 1000, 5000, 20000, 50000, 100000, 1000000, 20000000, 500000000]
+    const cashValues = [25, 50, 100, 500,
+      1000, // 1K
+      5000, // 5K
+      20000, // 20K
+      50000, // 50K
+      100000, // 100K
+      1000000, // 1M
+      20000000, // 20M
+      500000000, // 500M
+      700000000, // 700M
+      1000000000, // 1B
+      5000000000, // 5B
+      10000000000, // 10B
+      50000000000, // 50B
+      100000000000, // 100B
+      500000000000, // 500B
+      1000000000000, // 1T
+      20000000000000, // 2T
+    ]
     return cashValues[this.state.level-1]
   }
   upgradeClick(){
     if(this.state.cash > this.upgradeLevel(this.state.level)) {
+      this.setState({upgradeBox: 'gray'})
+      this.setState({upgrade_extended: 50})
+      this.setState({keyRadius: this.handleKeyBorderRadius(this.state.level, 50)})
       this.setState({ multiplier: this.state.multiplier * 2 })
       this.setState({ level: this.state.level + 1})
       this.setState({cash: this.state.cash - this.upgradeLevel(this.state.level)})
+      console.log(this.state.keyRadius)
     }
 
 
@@ -171,6 +226,9 @@ class Game extends Component {
     setInterval(a=> {
       this.setState({upgrade_extended: 50})
     }, 100)
+  }
+  handleKeyBorderRadius(level, radius){
+    return radius - level
   }
   render(){
     return(
@@ -200,16 +258,18 @@ class Game extends Component {
 
           <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:1200, w: 100}}
+              defaultStyle={{y:1200, w: 100, r: this.state.keyRadius}}
               style={{
                 y: spring(500, presets.gentle),
-                w: spring(this.state.btn_left_end_width, presets.wobbly)}}>
+                w: spring(this.state.btn_left_end_width, presets.wobbly),
+                r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* LEFT KEYBOARD */
                 <LeftKeyboard
                   style={{
                     height: this.state.btn_height,
                     width: i.w,
                     top: i.y,
+                    borderRadius: i.r,
                     ...btn_switch_2
                   }}
                   click={this.handleLeftClick}
@@ -232,7 +292,7 @@ class Game extends Component {
                     height: 50,
                     width: i.w,
                     top: i.y,
-                    color: '#00a0f0',
+                    color: this.state.upgradeBox,
                   ...btn_upgrade
                   }}
                   click={this.upgradeClick}
@@ -243,16 +303,18 @@ class Game extends Component {
 
           <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:800, w: 100}}
+              defaultStyle={{y:800, w: 100, r: this.state.keyRadius}}
               style={{
                 y: spring(500, presets.gentle),
-                w: spring(this.state.btn_end_width, presets.wobbly)}}>
+                w: spring(this.state.btn_end_width, presets.wobbly),
+                r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* RIGHT KEYBOARD */
                 <RightKeyboard
                   style={{
                     height: this.state.btn_height,
                     width: i.w,
                     top: i.y,
+                    borderRadius: i.r,
                     ...btn_switch_2
                   }}
                   click={this.handleRightClick}
