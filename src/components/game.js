@@ -10,7 +10,8 @@ import Fund from '../svg/fund.svg'
 import Code from '../svg/code.svg'
 import mojs from 'mo-js'
 import Pointable from '../pointable.js'
-import { leftKey, btn_upgrade, rightKey, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel } from './style'
+import { Notification } from 'react-notification'
+import { leftKey, btn_upgrade, rightKey, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel, achievementStyle } from './style'
 
 const width = window.innerWidth
 const height = window.innerHeight
@@ -20,8 +21,8 @@ import K2 from '../svg/k2.svg'
 import K3 from '../svg/k3.svg'
 import K4 from '../svg/k4.svg'
 const keyboards = [K1,K1,K1, K2,K2,K2,K2,K2,K2, K3,K3,K3,K3,K3,K3,K3,K3,K3, K4,K4,K4,K4,K4,K4,K4,K4,K4,K4,K4,K4,]
-const keyboardColors = ['green', '#2a5934', 'teal', '#003666', '#050f2c', '#4d4f53', '#333333', '#003366', '#e01f3d', '#543729', '#343a4e', '#231f20', '#204056', '#555', '#444', '#333', '#111', '#000'  ]
-
+const keyboardColors = ['green','green', '#2a5934','#2a5934','#2a5934', 'teal','teal','teal','teal', '#003666','#003666','#003666','#003666','#003666', '#050f2c','#050f2c','#050f2c', '#4d4f53','#4d4f53','#204056', '#555', '#444', '#333', '#111', '#000']
+const achievements = ['HTML', 'CSS', 'Javascript', 'Python', 'Ruby', 'Ruby on Rails', 'Nodejs', 'React', 'MERN']
 const rightTap = new mojs.Burst({
   radius: {60:80},
   count: 4,
@@ -59,18 +60,35 @@ const leftTap = new mojs.Burst({
   top: height/1.185,
   duration: 100,
 })
-
-const upgradeBurst_2 = new mojs.Burst({
+const upgradeBurst_3 = new mojs.Burst({
   radius: {20:60},
   count: 3,
-  angle: {0:-40},
+  angle: {0:-60},
   children: {
     shape: 'circle',
     fill: 'none',
     stroke: '#00a0f0',
     strokeWidth: 1,
     opacity: {.5: 0},
-    angle: 90,
+    angle: 120,
+    radius: 'rand(0,3)',
+    delay: 'stagger(rand(0,100))'
+  },
+  top: height/1.185,
+  duration: 100,
+  degree: 60
+})
+const upgradeBurst_2 = new mojs.Burst({
+  radius: {20:60},
+  count: 3,
+  angle: {0:-60},
+  children: {
+    shape: 'circle',
+    fill: 'none',
+    stroke: '#00a0f0',
+    strokeWidth: 1,
+    opacity: {.5: 0},
+    angle: 120,
     radius: 'rand(0,15)',
     delay: 'stagger(rand(0,100))'
   },
@@ -111,10 +129,14 @@ class Game extends Component {
       lineSpacing: 0,
       upgradeBox: 'gray',
       keyRadius: 50,
+      achievement: '',
+      toast: false,
     }
     this.handleRightClick = this.handleRightClick.bind(this)
     this.handleLeftClick = this.handleLeftClick.bind(this)
     this.upgradeClick = this.upgradeClick.bind(this)
+    this.hideToast = this.hideToast.bind(this)
+    //this.achievements = this.achievements.bind(this)
     this.lines = this.lines.bind(this)
   }
   handleRightClick(){ /* RIGHT KEYBOARD CLICK */
@@ -137,10 +159,12 @@ class Game extends Component {
     if(this.state.cash >= this.upgradeLevel(this.state.level)){
       this.setState({upgradeBox: '#00a0f0'})
       this.setState({upgrade_extended: 70})
-      //console.log(this.state.level)
+      const timeline = new mojs.Timeline({repeat: 2}).add(upgradeBurst_3).play()
     }
     const timeline = new mojs.Timeline({}).add(rightTap).play()
+    this.achievements(this.state.lines)
 
+    this.setState({toast: true})
   }
 
   handleLeftClick(){ /* LEFT KEYBOARD CLICK */
@@ -280,7 +304,7 @@ class Game extends Component {
       this.setState({ level: this.state.level + 1})
       this.setState({cash: this.state.cash - this.upgradeLevel(this.state.level)})
       console.log(this.state.keyRadius)
-      const timeline = new mojs.Timeline({}).add(upgradeBurst,upgradeBurst_2).play()
+      const timeline = new mojs.Timeline({}).add(upgradeBurst,upgradeBurst_2,upgradeBurst_3).play()
     }
 
 
@@ -292,6 +316,24 @@ class Game extends Component {
   handleKeyBorderRadius(level, radius){
     return radius - level
   }
+  achievements(lines){
+    if (lines > 5){
+      this.setState({achievement: achievements[0]})
+    }
+    if(lines > 15){
+      this.setState({achievement: achievements[1]})
+    }
+    if (lines > 1000){
+      this.setState({achievement: achievements[2]})
+    }
+    if(lines > 5000){
+      this.setState({achievement: achievements[3]})
+    }
+  }
+  hideToast(){
+    this.setState({toast: false})
+  }
+
   render(){
     return(
       <div>
@@ -313,6 +355,12 @@ class Game extends Component {
             <img alt={Medal} style={{...imgHeader}} src={Code} height='20px' width='20px'/>
             {this.lines()}
           </Flexbox>
+        </Flexbox>
+
+        <Flexbox flexDirection='row' style={{marginTop: '50px'}}>
+            <Flexbox flexGrow={1} style={{...achievementStyle}}>
+
+            </Flexbox>
         </Flexbox>
 
         <div style={{...flexKeys}}>
@@ -373,7 +421,7 @@ class Game extends Component {
               defaultStyle={{y:800, w: this.state.btn_end_width, r: this.state.keyRadius}}
               style={{
                 y: spring(500, presets.gentle),
-                w: spring(this.state.btn_end_width, presets.gentle),
+                w: spring(this.state.btn_end_width, presets.noWobble),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* RIGHT KEYBOARD */
 
@@ -384,7 +432,7 @@ class Game extends Component {
                     width: i.w,
                     top: i.y,
                     borderRadius: i.r,
-                    backgroundColor: keyboardColors[this.state.level -1],
+                    backgroundColor: keyboardColors[this.state.level -1] || 'black',
                     ...rightKey
                   }}
                   click={this.handleRightClick}

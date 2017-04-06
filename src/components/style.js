@@ -76,3 +76,6 @@ export const linesLabel = {
   fontFamily: 'Exo, sans-serif',
   fontWeight: 500
 }
+export const achievementStyle = {
+  justifyContent: 'space-around',
+}
