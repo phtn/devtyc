@@ -149,9 +149,13 @@ class Game extends Component {
     setTimeout(a=>{
       this.setState({end_size: 18})
     },0)
-    this.setState({btn_end_width: 125})
+    this.setState({btn_end_width: 101})
     setInterval(b=> {
       this.setState({btn_end_width: 100})
+    },75)
+    this.setState({btn_end_height: 101})
+    setInterval(b=> {
+      this.setState({btn_end_height: 100})
     },75)
     this.setState({experience: this.state.experience + (this.state.experience / 500)
     })
@@ -179,7 +183,7 @@ class Game extends Component {
       },100)
 
     this.setState({ /* LEFT BUTTON MOTION STATE*/
-      btn_left_end_width: 125})
+      btn_left_end_width: 101})
       setInterval(b=> {
         this.setState({btn_left_end_width: 100})
       },75)
@@ -418,17 +422,22 @@ class Game extends Component {
 
           <Flexbox style={{...flexFooter}} flexGrow={1}>
             <Motion
-              defaultStyle={{y:800, w: this.state.btn_end_width, r: this.state.keyRadius}}
+              defaultStyle={{
+                y: 800,
+                w: this.state.btn_end_width,
+                h: this.state.btn_end_height,
+                r: this.state.keyRadius}}
               style={{
                 y: spring(500, presets.gentle),
                 w: spring(this.state.btn_end_width, presets.noWobble),
+                h: spring(this.state.btn_end_height, presets.noWobble),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* RIGHT KEYBOARD */
 
                 <RightKeyboard
                   img={keyboards[this.state.level -1]}
                   style={{
-                    height: this.state.btn_height,
+                    height: i.h,
                     width: i.w,
                     top: i.y,
                     borderRadius: i.r,
