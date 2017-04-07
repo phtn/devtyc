@@ -14,6 +14,8 @@ import { leftKey, btn_upgrade, rightKey, cashLabel, flex, flexFooter, flexKeys, 
 
 const width = window.innerWidth
 const height = window.innerHeight
+const supportsVibrate = "vibrate" in navigator;
+
 
 import K1 from '../svg/k1.svg'
 import K2 from '../svg/k2.svg'
@@ -37,7 +39,7 @@ const rightTap = new mojs.Burst({
     angle: 90,
   },
   left: width/1.23,
-  top: window.innerHeight/1.100,
+  top: window.innerHeight/1.110,
   duration: 100,
 })
 
@@ -55,8 +57,8 @@ const leftTap = new mojs.Burst({
     opacity: {.5: 0},
     angle: 90,
   },
-  left: width/5.26,
-  top: window.innerHeight/1.100,
+  left: width/5.36,
+  top: window.innerHeight/1.110,
   duration: 100,
 })
 const upgradeBurst_3 = new mojs.Burst({
@@ -316,7 +318,7 @@ class Game extends Component {
     )
   }
   upgradeLevel(level){
-    const cashValues = [10, 25, 50, 100, 500,
+    const cashValues = [1,10, 25, 50, 100, 500,
       1000, // 1K
       5000, // 5K
       20000, // 20K
@@ -349,7 +351,7 @@ class Game extends Component {
       setTimeout(t=> this.setState({ level: this.state.level + 1}), 1500)
       // eslint-disable-next-line
       const timeline = new mojs.Timeline({}).add(upgradeSwirl,learnSwirl,upgradeBurst_2,upgradeBurst_3).play()
-
+      navigator.vibrate(10)
     }
 
 
