@@ -37,7 +37,7 @@ const rightTap = new mojs.Burst({
     angle: 90,
   },
   left: width/1.23,
-  top: height/1.185,
+  top: window.innerHeight/1.100,
   duration: 100,
 })
 
@@ -56,7 +56,7 @@ const leftTap = new mojs.Burst({
     angle: 90,
   },
   left: width/5.26,
-  top: height/1.185,
+  top: window.innerHeight/1.100,
   duration: 100,
 })
 const upgradeBurst_3 = new mojs.Burst({
@@ -156,6 +156,7 @@ class Game extends Component {
       btn_left_end_width: 100,
       btn_height: 100,
       btn_end_height: 100,
+      btnYAxis: window.innerHeight/1.2,
       upgrade_extended: 50,
       upgrade_deg: 0,
       multiplier: 1,
@@ -418,7 +419,7 @@ class Game extends Component {
             <Motion
               defaultStyle={{y:1200, w: this.state.btn_end_width, r: this.state.keyRadius}}
               style={{
-                y: spring(500, presets.gentle),
+                y: spring(this.state.btnYAxis, presets.gentle),
                 w: spring(this.state.btn_left_end_width, presets.gentle),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
               { i => /* LEFT KEYBOARD */
@@ -444,7 +445,7 @@ class Game extends Component {
             <Motion
               defaultStyle={{y:1000, w: 50, d: -720}}
               style={{
-                y: spring(525, presets.gentle),
+                y: spring(window.innerHeight/1.150, presets.gentle),
                 w: spring(this.state.upgrade_extended, presets.wobbly),
                 d: spring(this.state.upgrade_deg, presets.stiff)}}>
             { i => /* UPGRADE BUTTON */
@@ -472,7 +473,7 @@ class Game extends Component {
                 h: this.state.btn_end_height,
                 r: this.state.keyRadius}}
               style={{
-                y: spring(500, presets.gentle),
+                y: spring(this.state.btnYAxis, presets.gentle),
                 w: spring(this.state.btn_end_width, presets.noWobble),
                 h: spring(this.state.btn_end_height, presets.noWobble),
                 r: spring(this.state.keyRadius, presets.gentle)}}>
