@@ -82,5 +82,5 @@ export const achievementStyle = {
   height: '400px',
   border: '1px solid none',
   backgroundColor: '#eee',
-  borderRadius: '2px 2px 50px 50px',
+  borderRadius: '10px 10px 50px 50px',
 }

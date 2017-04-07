@@ -349,7 +349,7 @@ class Game extends Component {
     return(
       <div>
 
-        <Flexbox flexDirection='row' justifyContent='flex-start'>
+        <Flexbox flexDirection='row' justifyContent='flex-start' style={{marginTop: '5px'}}>
           <Flexbox style={{...flex}} flexGrow={1} flexDirection='column'>
             <img alt={Medal} style={{...imgHeader}} src={Medal} height='20px' width='20px'/>
             <span style={{...levelLabel}}>&nbsp;&nbsp;{this.state.level}</span>
