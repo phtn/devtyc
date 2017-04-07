@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Game from './components/game'
 
-import B from './components/demo-b'
+//import B from './components/demo-b'
 
 import './App.css';
 

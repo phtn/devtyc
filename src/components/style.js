@@ -74,8 +74,13 @@ export const imgHeader = {
 }
 export const linesLabel = {
   fontFamily: 'Exo, sans-serif',
-  fontWeight: 500
+  fontWeight: 500,
+  justifyContent: 'space-around',
 }
 export const achievementStyle = {
   justifyContent: 'space-around',
+  height: '400px',
+  border: '1px solid none',
+  backgroundColor: '#eee',
+  borderRadius: '2px 2px 50px 50px',
 }

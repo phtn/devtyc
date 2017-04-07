@@ -9,8 +9,7 @@ import Exp from '../svg/brain.svg'
 import Fund from '../svg/fund.svg'
 import Code from '../svg/code.svg'
 import mojs from 'mo-js'
-import Pointable from '../pointable.js'
-import { Notification } from 'react-notification'
+
 import { leftKey, btn_upgrade, rightKey, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel, achievementStyle } from './style'
 
 const width = window.innerWidth
@@ -61,9 +60,8 @@ const leftTap = new mojs.Burst({
   duration: 100,
 })
 const upgradeBurst_3 = new mojs.Burst({
-  radius: {20:60},
-  count: 3,
-  angle: {0:-60},
+  radius: {40:60},
+  count: 4,
   children: {
     shape: 'circle',
     fill: 'none',
@@ -71,12 +69,12 @@ const upgradeBurst_3 = new mojs.Burst({
     strokeWidth: 1,
     opacity: {.5: 0},
     angle: 120,
-    radius: 'rand(0,3)',
+    radius: {0:'rand(3,10)'},
     delay: 'stagger(rand(0,100))'
   },
-  top: height/1.185,
-  duration: 100,
-  degree: 60
+  top: height/1.140,
+  duration: 1000,
+  degree: 20
 })
 const upgradeBurst_2 = new mojs.Burst({
   radius: {20:60},
@@ -131,6 +129,7 @@ class Game extends Component {
       keyRadius: 50,
       achievement: '',
       toast: false,
+      achievementHeight: 0,
     }
     this.handleRightClick = this.handleRightClick.bind(this)
     this.handleLeftClick = this.handleLeftClick.bind(this)
@@ -141,10 +140,10 @@ class Game extends Component {
   }
   handleRightClick(){ /* RIGHT KEYBOARD CLICK */
     this.setState({lines: this.state.lines + this.state.multiplier + this.state.experience})
-    this.setState({lineSpacing: 4})
+    this.setState({lineSpacing: 2})
     setTimeout(a=>{
       this.setState({lineSpacing: 0})
-    },300)
+    },10)
     this.setState({end_size: 25})
     setTimeout(a=>{
       this.setState({end_size: 18})
@@ -163,8 +162,10 @@ class Game extends Component {
     if(this.state.cash >= this.upgradeLevel(this.state.level)){
       this.setState({upgradeBox: '#00a0f0'})
       this.setState({upgrade_extended: 70})
-      const timeline = new mojs.Timeline({repeat: 2}).add(upgradeBurst_3).play()
+      // eslint-disable-next-line
+      const timeline = new mojs.Timeline({}).add(upgradeBurst_3).play()
     }
+    // eslint-disable-next-line
     const timeline = new mojs.Timeline({}).add(rightTap).play()
     this.achievements(this.state.lines)
 
@@ -199,6 +200,7 @@ class Game extends Component {
       this.setState({upgrade_extended: 70})
       //console.log(this.state.level)
     }
+    // eslint-disable-next-line
     const timeline = new mojs.Timeline({}).add(leftTap).play()
   }
   lines(){ /*** LINES OF CODE LABEL ***/
@@ -210,7 +212,7 @@ class Game extends Component {
           ls: spring(this.state.lineSpacing)
         }}>
 
-        {i => <span style={{fontSize: i.s, letterSpacing: `${i.ls}px`, ...linesLabel}}>{this.numberReducer(this.state.lines)}</span>}
+        {i => <span style={{ letterSpacing: `${i.ls}px`, ...linesLabel}}>{this.numberReducer(this.state.lines)}</span>}
 
       </Motion>
     )
@@ -305,10 +307,13 @@ class Game extends Component {
       this.setState({upgrade_extended: 50})
       this.setState({keyRadius: this.handleKeyBorderRadius(this.state.level, 50)})
       this.setState({ multiplier: this.state.multiplier * 2 })
-      this.setState({ level: this.state.level + 1})
+
       this.setState({cash: this.state.cash - this.upgradeLevel(this.state.level)})
       console.log(this.state.keyRadius)
+      setTimeout(t=> this.setState({ level: this.state.level + 1}), 1500)
+      // eslint-disable-next-line
       const timeline = new mojs.Timeline({}).add(upgradeBurst,upgradeBurst_2,upgradeBurst_3).play()
+
     }
 
 
@@ -323,6 +328,8 @@ class Game extends Component {
   achievements(lines){
     if (lines > 5){
       this.setState({achievement: achievements[0]})
+      this.setState({achievementHeight: 100})
+      setInterval(a=> this.setState({achievementHeight: 0}), 3000)
     }
     if(lines > 15){
       this.setState({achievement: achievements[1]})
@@ -361,12 +368,14 @@ class Game extends Component {
           </Flexbox>
         </Flexbox>
 
-        <Flexbox flexDirection='row' style={{marginTop: '50px'}}>
-            <Flexbox flexGrow={1} style={{...achievementStyle}}>
-
+        <Motion defaultStyle={{h: this.state.achievementHeight}} style={{h: spring(this.state.achievementHeight)}}>
+          {i =>
+             <Flexbox flexDirection='row' style={{marginTop: '15px'}}>
+                <Flexbox flexGrow={1} style={{...achievementStyle}}>
+                </Flexbox>
             </Flexbox>
-        </Flexbox>
-
+          }
+        </Motion>
         <div style={{...flexKeys}}>
         <Flexbox flexDirection='row' >
 

@@ -1,7 +1,7 @@
 // Allows listening for pointer events using PEP for browsers that don't support them.
 // This component also adds support for dynamic event addition/removal that React does well,
 // even though React doesn't support any pointer events yet.
-
+/* eslint-disable */
 import React from 'react';
 
 
