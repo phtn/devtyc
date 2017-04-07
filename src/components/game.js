@@ -197,12 +197,7 @@ class Game extends Component {
     this.setState({experience: this.state.experience + (this.state.experience / 500)
     })
     this.setState({cash: this.state.cash + (this.state.lines * this.state.experience)})
-    if(this.state.cash >= this.upgradeLevel(this.state.level)){
-      this.setState({upgradeBox: '#00a0f0'})
-      this.setState({upgrade_extended: 70})
-      // eslint-disable-next-line
-      const timeline = new mojs.Timeline({}).add(upgradeBurst_3).play()
-    }
+
     // eslint-disable-next-line
     const timeline = new mojs.Timeline({}).add(rightTap).play()
     this.achievements(this.state.lines)
@@ -345,10 +340,10 @@ class Game extends Component {
       this.setState({upgrade_extended: 50})
       this.setState({keyRadius: this.handleKeyBorderRadius(this.state.level, 50)})
       this.setState({ multiplier: this.state.multiplier * 2 })
-
+      this.setState({ level: this.state.level + 1})
       this.setState({cash: this.state.cash - this.upgradeLevel(this.state.level)})
       console.log(this.state.keyRadius)
-      setTimeout(t=> this.setState({ level: this.state.level + 1}), 1500)
+
       // eslint-disable-next-line
       const timeline = new mojs.Timeline({}).add(upgradeSwirl,learnSwirl,upgradeBurst_2,upgradeBurst_3).play()
       navigator.vibrate(10)
@@ -382,7 +377,16 @@ class Game extends Component {
   hideToast(){
     this.setState({toast: false})
   }
-
+  componentDidMount(){
+    setInterval(()=> {
+      if(this.state.cash >= this.upgradeLevel(this.state.level)){
+        this.setState({upgradeBox: '#00a0f0'})
+        this.setState({upgrade_extended: 70})
+        // eslint-disable-next-line
+        const timeline = new mojs.Timeline({}).add(upgradeBurst_3).play()
+      }
+    }, 1000)
+  }
   render(){
     return(
       <div>
