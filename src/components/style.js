@@ -80,7 +80,8 @@ export const linesLabel = {
 export const achievementStyle = {
   justifyContent: 'space-around',
   height: '400px',
-  border: '1px solid none',
-  backgroundColor: '#eee',
+  border: '1px solid #999',
+  backgroundColor: '#fff',
   borderRadius: '10px 10px 50px 50px',
+  width: '100%',
 }

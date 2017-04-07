@@ -12,6 +12,8 @@ import mojs from 'mo-js'
 
 import { leftKey, btn_upgrade, rightKey, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel, achievementStyle } from './style'
 
+import Intro from './intro'
+
 const width = window.innerWidth
 const height = window.innerHeight
 const supportsVibrate = "vibrate" in navigator;
@@ -279,14 +281,69 @@ class Game extends Component {
           return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'B'
       }
       case 12: {
-          return numberStr.slice(0,3)  + 'q'
+          return numberStr.slice(0,3)  + 'B'
       }
       case 13: {
-          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'q'
+          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'B'
       }
       case 14: {
-          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'q'
+          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'B'
       }
+      case 15: {
+          return numberStr.slice(0,3)  + 'T'
+      }
+      case 16: {
+          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'T'
+      }
+      case 17: {
+          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'T'
+      }
+      case 18: {
+          return numberStr.slice(0,3)  + 'Qd'
+      }
+      case 19: {
+          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'Qd'
+      }
+      case 20: {
+          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'Qd'
+      }
+      case 21: {
+          return numberStr.slice(0,3)  + 'Qn'
+      }
+      case 22: {
+          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'Qn'
+      }
+      case 23: {
+          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'Qn'
+      }
+      case 24: {
+          return numberStr.slice(0,3)  + 'Sx'
+      }
+      case 25: {
+          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'Sx'
+      }
+      case 26: {
+          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'Sx'
+      }
+      case 27: {
+          return numberStr.slice(0,3)  + 'Sp'
+      }
+      case 28: {
+          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'Sp'
+      }
+      case 29: {
+          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'Sp'
+      }
+      case 30: {
+          return numberStr.slice(0,3)  + 'oc'
+      }
+      case 31: {
+          return numberStr.slice(0,1) + '.' + numberStr.slice(1,3) + 'oc'
+      }
+      case 32: {
+          return numberStr.slice(0,2) + '.' + numberStr.slice(2,4) + 'oc'
+      }
+
       default: return numberStr
     }
   }
@@ -313,7 +370,7 @@ class Game extends Component {
     )
   }
   upgradeLevel(level){
-    const cashValues = [1,10, 25, 50, 100, 500,
+    const cashValues = [25, 50, 100, 500,
       1000, // 1K
       5000, // 5K
       20000, // 20K
@@ -331,6 +388,9 @@ class Game extends Component {
       500000000000, // 500B
       1000000000000, // 1T
       20000000000000, // 2T
+      1000000000000000, // 100T
+      10000000000000000, // 1Qd
+      500000000000000000, // 50Qd
     ]
     return cashValues[this.state.level-1]
   }
@@ -414,6 +474,7 @@ class Game extends Component {
           {i =>
              <Flexbox flexDirection='row' style={{marginTop: '15px'}}>
                 <Flexbox flexGrow={1} style={{...achievementStyle}}>
+                <Intro />
                 </Flexbox>
             </Flexbox>
           }
