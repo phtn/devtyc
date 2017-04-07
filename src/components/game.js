@@ -95,7 +95,7 @@ const upgradeBurst_2 = new mojs.Burst({
   degree: 60
 })
 
-const upgradeBurst = new mojs.ShapeSwirl({
+const upgradeSwirl = new mojs.ShapeSwirl({
   fill: '#00a0f0',
   y: {0:-650},
   duration: 3000,
@@ -105,13 +105,48 @@ const upgradeBurst = new mojs.ShapeSwirl({
   radius: 10,
 })
 
+const linesSwirl = new mojs.ShapeSwirl({
+  fill: '#00a0f0',
+  y: {0:-650},
+  duration: 4000,
+  degreeShift: 5,
+  top: height/1.2,
+  swirlFrequency: 3,
+  radius: 10,
+})
+
+const learnSwirl = new mojs.ShapeSwirl({
+  fill: 'none',
+  stroke: '#8a7967',
+  strokeWidth: 3      ,
+  shape: 'polygon',
+  points: 6,
+  y: {0:-650},
+  duration: 4000,
+  degreeShift: -19,
+  top: height/1.2,
+  swirlFrequency: 3,
+  radius: 6,
+  angle: {0:360},
+})
+
+const cashSwirl = new mojs.ShapeSwirl({
+  fill: 'green',
+  y: {0:-650},
+  duration: 4500,
+  degreeShift: -8,
+  top: height/1.2,
+  swirlFrequency: 3,
+  radius: 5,
+})
+
 
 class Game extends Component {
   constructor(props){
     super(props)
     this.state = {
       lines: 0,
-      experience: 0.03,
+      experience: 0.0245,
       cash: 0,
       level: 1,
       size: 75,
@@ -280,7 +315,7 @@ class Game extends Component {
     )
   }
   upgradeLevel(level){
-    const cashValues = [1,25, 50, 100, 500,
+    const cashValues = [1,2,3,4,25, 50, 100, 500,
       1000, // 1K
       5000, // 5K
       20000, // 20K
@@ -312,7 +347,7 @@ class Game extends Component {
       console.log(this.state.keyRadius)
       setTimeout(t=> this.setState({ level: this.state.level + 1}), 1500)
       // eslint-disable-next-line
-      const timeline = new mojs.Timeline({}).add(upgradeBurst,upgradeBurst_2,upgradeBurst_3).play()
+      const timeline = new mojs.Timeline({}).add(upgradeSwirl,learnSwirl,upgradeBurst_2,upgradeBurst_3).play()
 
     }
 
