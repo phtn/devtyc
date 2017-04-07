@@ -447,7 +447,7 @@ class Game extends Component {
             <Motion
               defaultStyle={{y:1000, w: 50, d: -720}}
               style={{
-                y: spring(window.innerHeight/1.150, presets.gentle),
+                y: spring(window.innerHeight/1.25, presets.gentle),
                 w: spring(this.state.upgrade_extended, presets.wobbly),
                 d: spring(this.state.upgrade_deg, presets.stiff)}}>
             { i => /* UPGRADE BUTTON */
