@@ -315,7 +315,7 @@ class Game extends Component {
     )
   }
   upgradeLevel(level){
-    const cashValues = [1,2,3,4,25, 50, 100, 500,
+    const cashValues = [10, 25, 50, 100, 500,
       1000, // 1K
       5000, // 5K
       20000, // 20K
