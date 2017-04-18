@@ -189,11 +189,11 @@ class Game extends Component {
       this.setState({end_size: 18})
     },0)
     this.setState({btn_end_width: 101})
-    setInterval(b=> {
+    setTimeout(b=> {
       this.setState({btn_end_width: 100})
     },75)
     this.setState({btn_end_height: 101})
-    setInterval(b=> {
+    setTimeout(b=> {
       this.setState({btn_end_height: 100})
     },75)
     this.setState({experience: this.state.experience + (this.state.experience / 500)
@@ -214,13 +214,13 @@ class Game extends Component {
 
     this.setState({ /* LINES LABEL SIZE */
       end_size: 25})
-      setInterval(a=>{
+      setTimeout(a=>{
         this.setState({end_size: 18})
       },100)
 
     this.setState({ /* LEFT BUTTON MOTION STATE*/
       btn_left_end_width: 101})
-      setInterval(b=> {
+      setTimeout(b=> {
         this.setState({btn_left_end_width: 100})
       },75)
 
@@ -411,7 +411,7 @@ class Game extends Component {
 
 
     this.setState({ upgrade_extended: 60})
-    setInterval(a=> {
+    setTimeout(a=> {
       this.setState({upgrade_extended: 50})
     }, 100)
   }
@@ -422,7 +422,7 @@ class Game extends Component {
     if (lines > 5){
       this.setState({achievement: achievements[0]})
       this.setState({achievementHeight: 100})
-      setInterval(a=> this.setState({achievementHeight: 0}), 3000)
+      setTimeout(a=> this.setState({achievementHeight: 0}), 3000)
     }
     if(lines > 15){
       this.setState({achievement: achievements[1]})
@@ -438,7 +438,7 @@ class Game extends Component {
     this.setState({toast: false})
   }
   componentDidMount(){
-    setInterval(()=> {
+    setTimeout(()=> {
       if(this.state.cash >= this.upgradeLevel(this.state.level)){
         this.setState({upgradeBox: '#00a0f0'})
         this.setState({upgrade_extended: 70})

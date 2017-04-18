@@ -1,8 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+const n = 4;
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+it("should return 4", () => {
+  expect(n).toEqual(4);
 });
+
+it(" should return true", () => {
+  expect(true).toBe(true);
+});
+
+it("show screen", () => {
+  expect(window.innerWidth > 1023).toBe(true)
+})

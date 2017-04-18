@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
@@ -19,7 +19,6 @@ const div = {
 const style = {
   fontFamily: 'Ubuntu, sans-serif',
   fontSize: 10,
-  //border: '1px solid red',
   width: '100%',
   marginLeft: 10,
 }
