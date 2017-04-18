@@ -16,6 +16,7 @@ import Intro from './intro'
 
 const width = window.innerWidth
 const height = window.innerHeight
+// eslint-disable-next-line
 const supportsVibrate = "vibrate" in navigator;
 
 
@@ -204,7 +205,7 @@ class Game extends Component {
     this.setState({cash: this.state.cash + (this.state.lines * this.state.experience)})
 
     // eslint-disable-next-line
-    const timeline = new mojs.Timeline({}).add(rightTap).play()
+    // const timeline = new mojs.Timeline({}).add(rightTap).play()
     this.achievements(this.state.lines)
 
     this.setState({toast: true})
@@ -239,7 +240,7 @@ class Game extends Component {
       //console.log(this.state.level)
     }
     // eslint-disable-next-line
-    const timeline = new mojs.Timeline({}).add(leftTap).play()
+    // const timeline = new mojs.Timeline({}).add(leftTap).play()
   }
   lines(){ /*** LINES OF CODE LABEL ***/
     return (
