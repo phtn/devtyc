@@ -9,6 +9,7 @@ import Exp from '../svg/brain.svg'
 import Fund from '../svg/fund.svg'
 import Code from '../svg/code.svg'
 import mojs from 'mo-js'
+import Toast from 'pre-toast/lib/Toast'
 
 import { leftKey, btn_upgrade, rightKey, cashLabel, flex, flexFooter, flexKeys, expLabel, levelLabel, imgHeader, linesLabel, achievementStyle } from './style'
 
@@ -144,7 +145,13 @@ const cashSwirl = new mojs.ShapeSwirl({
   swirlFrequency: 3,
   radius: 5,
 })
+let config = {
+  position: 'top-right',
+  maxVisible: 1,
+  timeBar: true
+}
 
+Toast.configuration(config)
 
 class Game extends Component {
   constructor(props){
@@ -179,27 +186,24 @@ class Game extends Component {
     //this.achievements = this.achievements.bind(this)
     this.lines = this.lines.bind(this)
   }
-  handleAddLinesFunction(){
-    return this.state.lines + this.state.multiplier + this.state.experience
+  handleToast(){
+    Toast.info('toast info')
   }
   handleRightClick(){ /* RIGHT KEYBOARD CLICK */
     this.setState({lines: this.state.lines + this.state.multiplier + this.state.experience})
     this.setState({lineSpacing: 2})
-    setTimeout(a=>{
+    setInterval(a=>{
       this.setState({lineSpacing: 0})
     },10)
     this.setState({end_size: 25})
-    setTimeout(a=>{
+    setInterval(a=>{
       this.setState({end_size: 18})
-    },0)
-    this.setState({btn_end_width: 101})
-    setTimeout(b=> {
-      this.setState({btn_end_width: 100})
-    },75)
-    this.setState({btn_end_height: 101})
-    setTimeout(b=> {
-      this.setState({btn_end_height: 100})
-    },75)
+    },10)
+    this.setState({ /* LEFT BUTTON MOTION STATE*/
+      btn_end_width: 101})
+      setTimeout(b=> {
+        this.setState({btn_end_width: 100})
+      },75)
     this.setState({experience: this.state.experience + (this.state.experience / 500)
     })
     this.setState({cash: this.state.cash + (this.state.lines * this.state.experience)})
@@ -207,8 +211,7 @@ class Game extends Component {
     // eslint-disable-next-line
     // const timeline = new mojs.Timeline({}).add(rightTap).play()
     this.achievements(this.state.lines)
-
-    this.setState({toast: true})
+    // this.handleToast()
   }
 
   handleLeftClick(){ /* LEFT KEYBOARD CLICK */
@@ -472,15 +475,10 @@ class Game extends Component {
           </Flexbox>
         </Flexbox>
 
-        <Motion defaultStyle={{h: this.state.achievementHeight}} style={{h: spring(this.state.achievementHeight)}}>
-          {i =>
-             <Flexbox flexDirection='row' style={{marginTop: '15px'}}>
-                <Flexbox flexGrow={1} style={{...achievementStyle}}>
-                <Intro />
-                </Flexbox>
-            </Flexbox>
-          }
-        </Motion>
+        <Flexbox>
+          <hr style={{width: 400, border: 'none', borderBottom: '1px solid #eee'}}/>
+        </Flexbox>
+
         <div style={{...flexKeys}}>
         <Flexbox flexDirection='row' >
 

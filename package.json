@@ -8,12 +8,11 @@
   "dependencies": {
     "flexbox-react": "^4.3.1",
     "mo-js": "^0.288.1",
+    "pre-toast": "^1.0.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-motion": "^0.4.7",
-    "react-notification": "^6.6.0",
     "react-slick": "^0.14.7",
-    "react-toastify": "^1.2.2",
     "slick-carousel": "^1.6.0"
   },
   "scripts": {
