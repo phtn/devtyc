@@ -74,7 +74,7 @@ const upgradeBurst_3 = new mojs.Burst({
     opacity: {.5: 0},
     angle: 120,
     radius: {0:'rand(3,10)'},
-    delay: 'stagger(rand(0,100))'
+    delay: 'stagger(rand(0,1000))'
   },
   top: height/1.140,
   duration: 1000,
@@ -177,6 +177,9 @@ class Game extends Component {
     this.hideToast = this.hideToast.bind(this)
     //this.achievements = this.achievements.bind(this)
     this.lines = this.lines.bind(this)
+  }
+  handleAddLinesFunction(){
+    return this.state.lines + this.state.multiplier + this.state.experience
   }
   handleRightClick(){ /* RIGHT KEYBOARD CLICK */
     this.setState({lines: this.state.lines + this.state.multiplier + this.state.experience})
@@ -370,7 +373,7 @@ class Game extends Component {
     )
   }
   upgradeLevel(level){
-    const cashValues = [25, 50, 100, 500,
+    const cashValues = [1, 25, 50, 100, 500,
       1000, // 1K
       5000, // 5K
       20000, // 20K
@@ -408,8 +411,6 @@ class Game extends Component {
       const timeline = new mojs.Timeline({}).add(upgradeSwirl,learnSwirl,upgradeBurst_2,upgradeBurst_3).play()
       navigator.vibrate(10)
     }
-
-
     this.setState({ upgrade_extended: 60})
     setTimeout(a=> {
       this.setState({upgrade_extended: 50})
@@ -438,7 +439,7 @@ class Game extends Component {
     this.setState({toast: false})
   }
   componentDidMount(){
-    setTimeout(()=> {
+    setInterval(()=> {
       if(this.state.cash >= this.upgradeLevel(this.state.level)){
         this.setState({upgradeBox: '#00a0f0'})
         this.setState({upgrade_extended: 70})
